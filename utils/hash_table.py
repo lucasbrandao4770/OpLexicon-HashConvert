@@ -2,10 +2,9 @@ from utils.hasher import Hasher
 
 class HashTable():
     __EMPTY = None
-    def __init__(self, size=42209, hasher=None) -> None:
+    def __init__(self, size=42209, hashing_func='md5') -> None:
         self.size = size
-        if hasher is None:
-            self.hasher = Hasher(size)
+        self.hasher = Hasher(table_size=size, hashing_func=hashing_func)
         self.body = [self.__EMPTY]*size
         self.n_keys = 0
 
@@ -19,7 +18,6 @@ class HashTable():
                 return
             print(f'{key} caused collision with {self.body[idx]} at position {idx}!')
             idx = self.__handle_collision(idx)
-            print(f'idx set to {idx}')
 
         self.body[idx] = value
         self.n_keys += 1

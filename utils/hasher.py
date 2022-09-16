@@ -2,18 +2,16 @@ import hashlib
 
 
 class Hasher():
-    def __init__(self, table_size=42) -> None:
-        self.table_size = table_size
-
-    def hash(self, key, func_name='md5'):
+    def __init__(self, table_size=42, hashing_func='md5') -> None:
         valid_names = ['md5', 'sha1', 'sha224', 'sha256', 'sha512']
-
-        assert func_name in valid_names, f"Please enter a valid hashing function. \
+        assert hashing_func in valid_names, f"Please enter a valid hashing function. \
                                             Valid functions are: {valid_names}\n"
-        hash_func = getattr(hashlib, f'{func_name}')
+        self.table_size = table_size
+        self.hashing_func = getattr(hashlib, f'{hashing_func}')
 
+    def hash(self, key):
         try:
-            hashed_value = hash_func(key.encode('utf-8')).hexdigest()
+            hashed_value = self.hashing_func(key.encode('utf-8')).hexdigest()
         except (AttributeError, TypeError):
             raise AssertionError('Key should be a string')
 
