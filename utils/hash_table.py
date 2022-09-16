@@ -7,17 +7,22 @@ class HashTable():
         if hasher is None:
             self.hasher = Hasher(size)
         self.body = [self.__EMPTY]*size
+        self.n_keys = 0
 
 
     def add(self, key, value):
         idx = self.hasher.hash(key)
 
         while (self.body[idx] != HashTable.__EMPTY):
+            if self.body[idx] == value:
+                print(f'{key} already in table!')
+                return
             print(f'{key} caused collision with {self.body[idx]} at position {idx}!')
             idx = self.__handle_collision(idx)
             print(f'idx set to {idx}')
 
         self.body[idx] = value
+        self.n_keys += 1
 
 
     def delete(self, key):
