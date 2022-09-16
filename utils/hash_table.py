@@ -14,9 +14,7 @@ class HashTable():
 
         while (self.body[idx] != HashTable.__EMPTY):
             if self.body[idx] == value:
-                print(f'{key} already in table!')
                 return
-            print(f'{key} caused collision with {self.body[idx]} at position {idx}!')
             idx = self.__handle_collision(idx)
 
         self.body[idx] = value
