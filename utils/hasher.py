@@ -10,10 +10,14 @@ class Hasher():
 
         assert func_name in valid_names, f"Please enter a valid hashing function. \
                                             Valid functions are: {valid_names}\n"
-
         hash_func = getattr(hashlib, f'{func_name}')
-        hashed_value = hash_func(key.encode('utf-8')).hexdigest()
-        return self.__transform(hashed_value)
+
+        try:
+            hashed_value = hash_func(key.encode('utf-8')).hexdigest()
+        except (AttributeError, TypeError):
+            raise AssertionError('Key should be a string')
+
+        return self.__transform(hashed_value) 
 
 
     def __transform(self, key):
