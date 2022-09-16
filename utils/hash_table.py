@@ -11,13 +11,13 @@ class HashTable():
 
     def add(self, key, value):
         idx = self.hasher.hash(key)
-        if self.body[idx] == HashTable.__EMPTY:
-            self.body[idx] = value
-            print(f'key added to position {idx}')
-        else:
-            # Collision
-            # some logic to change idx
-            print(f'collision at position {idx}!')
+
+        while (self.body[idx] != HashTable.__EMPTY):
+            print(f'{key} caused collision with {self.body[idx]} at position {idx}!')
+            idx = self.__handle_collision(idx)
+            print(f'idx set to {idx}')
+
+        self.body[idx] = value
 
 
     def delete(self, key):
@@ -29,6 +29,13 @@ class HashTable():
         self.add(key, value)
 
 
-    def __getitem__(self, key):
+    def get(self, key, value):
         idx = self.hasher.hash(key)
+        while self.body[idx]!=value and self.body[idx]!=HashTable.__EMPTY:
+            idx = self.__handle_collision(idx)
+
         return self.body[idx]
+
+
+    def __handle_collision(self, idx):
+        return (idx+1) % self.size
