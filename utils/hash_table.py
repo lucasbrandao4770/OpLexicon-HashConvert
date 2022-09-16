@@ -8,6 +8,7 @@ class HashTable():
             self.hasher = Hasher(size)
         self.body = [self.__EMPTY]*size
 
+
     def add(self, key, value):
         idx = self.hasher.hash(key)
         if self.body[idx] == HashTable.__EMPTY:
@@ -22,3 +23,12 @@ class HashTable():
     def delete(self, key):
         idx = self.hasher.hash(key)
         self.body[idx] = HashTable.__EMPTY
+
+
+    def __setitem__(self, key, value):
+        self.add(key, value)
+
+
+    def __getitem__(self, key):
+        idx = self.hasher.hash(key)
+        return self.body[idx]
